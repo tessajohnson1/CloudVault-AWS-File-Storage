@@ -117,7 +117,7 @@ http://127.0.0.1:5000/health
 The following diagram illustrates the architecture of CloudVault and the interaction between the user interface, Flask backend, AWS services, and Amazon S3 storage.
 
 <p align="center">
-  <img src="images/architecture.png" alt="CloudVault System Architecture" width="800">
+  <img src="CloudVault%20System%20Architecture.png" alt="CloudVault System Architecture" width="800">
 </p>
 
 <p align="center">
