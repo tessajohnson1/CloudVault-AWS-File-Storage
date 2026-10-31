@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CloudVault | AWS File Storage</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark topbar">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">☁ CloudVault</a>
+    <span class="navbar-text text-white-50">AWS Cloud Storage Mini Project</span>
+  </div>
+</nav>
+
+<main class="container py-4 py-md-5">
+  <section class="hero mb-4">
+    <div>
+      <p class="eyebrow mb-2">SECURE • SIMPLE • CLOUD-BASED</p>
+      <h1>Your files, safely in the cloud.</h1>
+      <p class="mb-0">Upload, access, and manage your files using Amazon S3.</p>
+    </div>
+    <div class="cloud-icon" aria-hidden="true">☁</div>
+  </section>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% if error %}
+    <div class="alert alert-warning"><strong>Setup / AWS notice:</strong> {{ error }}</div>
+  {% endif %}
+
+  <section class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="stat-card">
+        <span class="stat-icon">▤</span>
+        <div><p>Total files</p><h2>{{ total_files }}</h2></div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="stat-card">
+        <span class="stat-icon">◫</span>
+        <div><p>Storage used</p><h2>{{ total_size }}</h2></div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="stat-card">
+        <span class="stat-icon">☁</span>
+        <div><p>Cloud provider</p><h2 class="provider">Amazon S3</h2></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel mb-4">
+    <div class="panel-heading">
+      <div>
+        <h2>Upload a file</h2>
+        <p>Choose a file to store in your private S3 bucket.</p>
+      </div>
+      <span class="pill">Max {{ max_file_mb }} MB</span>
+    </div>
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+      <label class="dropzone" for="file-input">
+        <span class="upload-symbol">↑</span>
+        <strong id="file-label">Choose a file or drag it here</strong>
+        <span class="muted">PDF, Office documents, TXT, CSV, images, ZIP, XLSX</span>
+        <input id="file-input" type="file" name="file" required>
+      </label>
+      <div class="d-flex justify-content-end mt-3">
+        <button class="btn btn-primary px-4" type="submit">Upload to cloud ↑</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="panel-heading files-heading">
+      <div>
+        <h2>My files</h2>
+        <p>Objects currently stored in your S3 bucket.</p>
+      </div>
+      <span class="pill">{{ total_files }} file(s)</span>
+    </div>
+
+    {% if files %}
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead><tr><th>File name</th><th>Size</th><th>Last modified</th><th class="text-end">Actions</th></tr></thead>
+        <tbody>
+        {% for file in files %}
+          <tr>
+            <td><span class="file-icon">▤</span><span class="filename">{{ file.name }}</span></td>
+            <td>{{ file.size }}</td>
+            <td>{{ file.last_modified }}</td>
+            <td>
+              <div class="d-flex justify-content-end gap-2">
+                <a class="btn btn-sm btn-outline-primary" href="{{ url_for('download', key=file.key) }}">Download</a>
+                <form method="post" action="{{ url_for('delete', key=file.key) }}" onsubmit="return confirm('Delete this file from S3?')">
+                  <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon">☁</div>
+        <h3>No files yet</h3>
+        <p>Upload your first file to see it listed here.</p>
+      </div>
+    {% endif %}
+    <div class="bucket-note"><span class="status-dot"></span> Bucket: <code>{{ bucket or "Not configured" }}</code> <span class="ms-auto">Region: {{ region }}</span></div>
+  </section>
+
+  <footer class="text-center py-4">CloudVault · M.Tech Cloud Computing Mini Project · Powered by Amazon S3</footer>
+</main>
+<script>
+  const input = document.getElementById("file-input");
+  const label = document.getElementById("file-label");
+  input.addEventListener("change", () => {
+    label.textContent = input.files.length ? input.files[0].name : "Choose a file or drag it here";
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
