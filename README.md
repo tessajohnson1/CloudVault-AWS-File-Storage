@@ -87,18 +87,6 @@ Check `http://127.0.0.1:5000/health` for the health endpoint.
 - AWS may charge for storage, requests, and compute. Check current pricing and set a budget alert. Delete resources when finished.
 - Validate and test in your own AWS account; credentials, account permissions, and region configuration affect results.
 
-## Project architecture diagram
-flowchart TD
-    A[User] --> B[Web Interface<br/>HTML and CSS]
-    B --> C[Flask Backend<br/>Python]
-    C --> D[Boto3 AWS SDK]
-    D --> E[Amazon S3 Bucket]
-    E --> F[File Storage]
-
-    G[AWS IAM Permissions] -.-> D
-    H[Block Public Access] -.-> E
-    I[SSE-S3 Encryption] -.-> E
-
 ## Project features
 - Upload files to Amazon S3 cloud storage.
 - View and list stored files.
