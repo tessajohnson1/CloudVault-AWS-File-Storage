@@ -87,6 +87,18 @@ Check `http://127.0.0.1:5000/health` for the health endpoint.
 - AWS may charge for storage, requests, and compute. Check current pricing and set a budget alert. Delete resources when finished.
 - Validate and test in your own AWS account; credentials, account permissions, and region configuration affect results.
 
+## System Architecture
+
+The following diagram illustrates the architecture of CloudVault and the interaction between the user interface, Flask backend, AWS services, and Amazon S3 storage.
+
+<p align="center">
+  <img src="images/architecture.png" alt="CloudVault System Architecture" width="800">
+</p>
+
+<p align="center">
+  <b>Figure: System Architecture of CloudVault</b>
+</p>
+
 ## Project features
 - Upload files to Amazon S3 cloud storage.
 - View and list stored files.
