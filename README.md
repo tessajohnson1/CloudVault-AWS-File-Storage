@@ -2,6 +2,19 @@
 
 A mini-project web app built with Flask and Amazon S3. It supports uploading, listing, downloading with short-lived presigned URLs, and deleting files in a private S3 bucket.
 
+## Project Overview
+
+CloudVault is an AWS cloud-based file storage and management
+system developed using Python Flask and Amazon Web Services.
+
+The application allows users to upload, view, download, and
+delete files through a web-based interface. Amazon S3 is used
+to store files securely, while Boto3 connects the Flask
+application with AWS services.
+
+The project demonstrates cloud computing, object storage,
+web application development, and basic cloud security.
+
 ## Requirements
 - Python 3.10+
 - An AWS account and an S3 bucket
@@ -74,20 +87,40 @@ Check `http://127.0.0.1:5000/health` for the health endpoint.
 - AWS may charge for storage, requests, and compute. Check current pricing and set a budget alert. Delete resources when finished.
 - Validate and test in your own AWS account; credentials, account permissions, and region configuration affect results.
 
-## Suggested report outline
-1. Abstract
-2. Introduction and problem statement
-3. Objectives and scope
-4. Literature/background on cloud storage
-5. System requirements
-6. Architecture and module design
-7. Implementation
-8. Testing and results (include your own screenshots)
-9. Security, limitations, and future enhancements
-10. Conclusion and references
+## Project architecture diagram
+flowchart TD
+    A[User] --> B[Web Interface<br/>HTML and CSS]
+    B --> C[Flask Backend<br/>Python]
+    C --> D[Boto3 AWS SDK]
+    D --> E[Amazon S3 Bucket]
+    E --> F[File Storage]
 
-## Future enhancements
-- Amazon Cognito authentication and per-user authorization
-- DynamoDB metadata and activity logs
-- CloudWatch metrics/alarms
-- File versioning and sharing controls
+    G[AWS IAM Permissions] -.-> D
+    H[Block Public Access] -.-> E
+    I[SSE-S3 Encryption] -.-> E
+
+## Project features
+- Upload files to Amazon S3 cloud storage.
+- View and list stored files.
+- Download uploaded files.
+- Delete unwanted files from cloud storage.
+- Simple and user-friendly web dashboard.
+- AWS integration using Boto3.
+- IAM-based permissions for AWS operations.
+- S3 Block Public Access configuration.
+- Server-side encryption using SSE-S3.
+- Environment-based configuration management.
+
+## Technologies used
+| Technology | Purpose |
+|---|---|
+| Python | Backend programming |
+| Flask | Web application framework |
+| HTML | Frontend structure |
+| CSS | Frontend styling |
+| Amazon Web Services | Cloud platform |
+| Amazon S3 | Cloud file storage |
+| Boto3 | AWS integration |
+| AWS IAM | Access management |
+| AWS CLI | AWS configuration |
+| Visual Studio Code | Development environment |
